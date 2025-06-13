@@ -5,7 +5,7 @@ require_once "../datos/database.php"; // Make sure this path is correct and the 
 
 class LUsuario implements IUsuario {
     private $cn;
-
+    
     public function __construct() {
         $db = new DB();
         $this->cn = $db->conectar();
