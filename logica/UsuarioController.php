@@ -1,6 +1,4 @@
 <?php 
-require_once '../model/Usuario.php';
-
 class UsuarioController {
     public function login() {
         if ($_SERVER['REQUEST_METHOD']==='POST') {
@@ -28,6 +26,15 @@ class UsuarioController {
         } else {
             require '../views/login.php';
         }
+    }
+
+    public function index() {
+        require_once "models/UsuarioModel.php";
+        $usuarios = new UsuarioModel();
+        $data["titulo"] = "usuarios";
+        $data["usuarios"] = $usuarios->getUsers();
+
+        require_once "views/paciente/paciente.php";
     }
 }
 

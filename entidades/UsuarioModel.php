@@ -1,20 +1,25 @@
 <?php
-require_once '../database/DB.php';
 
-class Usuario {
+class UsuarioModel {
     private $db;
+    private $usuarios;
 
     public function __construct() {
-        $this->db = Conexion::getConnection();
+        $this->db = Conectar::conexion();
+        $this->usuarios = array();
 
     }
 
-    public function getAllUsers() {
-        $stmt = $this->db->prepare(
+    public function getUsers() {
+        $resultado = $this->db->query(
             "SELECT id_usuario, nombre, correo, passw, dni, tipo_usuario 
             FROM usuario");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        while ($row = $resultado->FETCH_ASSOC()) {
+            $this->usuarios[] = $row;
+        }
+
+        return $this->usuarios;
     }
 
     public function deleteById($id) {
