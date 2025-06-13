@@ -18,8 +18,8 @@ class LUsuario implements IUsuario {
             $stmt = $this->cn->prepare($sql);
             $stmt->execute();
             $usuarios = [];
-
-            while ($row = $stmt->fetch_assoc()) {
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
                 $usuarios[] = $row;
             }
 
@@ -45,7 +45,8 @@ class LUsuario implements IUsuario {
         try {
             $sql = "DELETE FROM usuario WHERE id_usuario = ?";
             $stmt = $this->cn->prepare($sql);
-            $stmt->bind_param("i", $usuario->getId());
+            $id_usuario = $usuario->getIdusuario();
+            $stmt->bind_param("i", $id_usuario);
             $stmt->execute();
         } catch (Exception $e) {
             die("Error al eliminar el usuario: ".$e->getMessage());
@@ -57,12 +58,16 @@ class LUsuario implements IUsuario {
         try {
             $sql = "INSERT INTO usuario (nombre, correo, passw, dni, tipo_usuario)
                 VALUES (?, ?, ?, ?, ?)";
+
+            $nombre = $usuario->getNombre();
+            $correo = $usuario->getCorreo();
+            $password = $usuario->getPassword();
+            $dni = $usuario->getDni();
+            $tipo_usuario = $usuario->getTipousuario();      
+
             $stmt = $this->cn->prepare($sql);
-            $stmt->bind_param("sssss", $usuario->getNombre(),
-                                $usuario->getCorreo(),
-                                $usuario->getPassword(),
-                                $usuario->getDni(),
-                                $usuario->getTipousuario());
+            $stmt->bind_param("sssss", $nombre,$correo, 
+            $password, $dni, $tipo_usuario);
             $stmt->execute();
         } catch (Exception $e) {
             die("Error al crear el nuevo usuario: ".$e->getMessage());

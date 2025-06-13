@@ -4,7 +4,6 @@ require_once './controller/UsuarioController.php';
 
 $controller = new UsuarioController();
 $controller->login();
-*/
 if (!isset($_GET['c'])) {
     require_once "login.UsuarioController.php";
     $controlador = new UsuarioController();
@@ -14,4 +13,5 @@ if (!isset($_GET['c'])) {
     require_once "$controlador.UsuarioController.php";
     $controlador = new UsuarioController();
 }
+*/
 ?>
