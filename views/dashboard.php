@@ -16,6 +16,23 @@ if (!isset($_SESSION['id_usuario'])) {
 <body>
     <h1>Bienvenido, <?= htmlspecialchars($_SESSION['nombre']) ?></h1>
     <a href="logout.php">Cerrar Sesión</a>
+
+    <div>
+        <h3>Mis citas</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Descripcion</th>
+                    <th>Dentista</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
 
