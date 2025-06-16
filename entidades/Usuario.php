@@ -53,7 +53,7 @@ class Usuario {
     }
 
     public function setTipousuario($tipousuario) {
-        $this->tipousuarios = $tipousuario;
+        $this->tipousuario = $tipousuario;
     }
 
 }

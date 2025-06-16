@@ -10,7 +10,7 @@
     <div class="container">
         <div>
             <label for="correo" class="title">INICIAR SESIÓN</label><br><br>
-            <form action="../../controller/UsuarioController.php" method="POST">
+            <form action="../../controllers/UsuarioController.php?action=login" method="POST">
                 <label for="correo">Correo:</label>
                 <input type="email" name="correo" id="correo" required>
                 <label for="contraseña">Contraseña:</label>
