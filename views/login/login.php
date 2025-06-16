@@ -19,6 +19,11 @@
             </form>
         </div>
         <a href="../registrar/registrar.html">Registrarse</a>
+        <?php 
+        if (isset($_GET['error']) && $_GET['error'] === '1') {
+        echo '<br><br><p style="color: red;">Usuario no encontrado<p>';
+        }
+        ?>
     </div>
 </body>
 </html>

@@ -44,6 +44,10 @@ class UsuarioController {
             $dni = $_POST['dni'] ?? '';
             $tipo = 'paciente'; // TIPO DE USUARIO POR DEFECTO
 
+            if (!preg_match('/^\d{8}$/', $dni)) {
+                echo "Dni no válido";
+                return;
+            }
             $campos = array($nombre, $correo, $passw, $dni);
             foreach ($campos as $campo) {
                 if (empty($campo)) {

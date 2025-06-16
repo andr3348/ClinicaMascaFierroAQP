@@ -16,9 +16,9 @@
                 <label for="correo">Correo:</label>
                 <input type="email" name="correo" id="correo" required>
                 <label for="password">Contraseña:</label>
-                <input type="password" name="password" id="password" required>
+                <input type="password" name="password" id="password" minlength="3" required>
                 <label for="dni">DNI:</label>
-                <input type="number" name="dni" id="dni" required>
+                <input type="text" name="dni" id="dni" pattern="\d{8}" maxlength="8" required title="DNI debe tener 8 número">
                 <button type="submit">Registrarse</button>
             </form>
         </div>
