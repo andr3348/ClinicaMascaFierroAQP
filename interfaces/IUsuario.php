@@ -6,6 +6,7 @@ interface IUsuario {
     public function eliminarUsuario(Usuario $usuario);
     public function obtenerUsuarios();
     public function obtenerUsuarioPorId($id);
+    public function verificarCredenciales($correo, $password);
 
 }
 
