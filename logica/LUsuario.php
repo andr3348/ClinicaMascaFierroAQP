@@ -1,7 +1,7 @@
 <?php 
 require_once "../entidades/Usuario.php";
 require_once "../interfaces/IUsuario.php";
-require_once "../datos/database.php"; // Make sure this path is correct and the Usuario class exists
+require_once "../datos/database.php";
 
 class LUsuario implements IUsuario {
     private $pdo;

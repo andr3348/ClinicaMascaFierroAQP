@@ -20,17 +20,17 @@ class UsuarioController {
                 $_SESSION['correo'] = $usuario->getCorreo();
 
                 if ($_SESSION['tipo'] === 'admin') {
-                    header("Location: ../views/admin/admin_dashboard.php");
+                    header("Location: ?view=admin");
                 } elseif ($_SESSION['tipo'] === 'secretaria') {
-                    header("Location: ../views/secretaria/secretaria_dashboard.php");
+                    header("Location: ?view=secretaria");
                 } elseif ($_SESSION['tipo'] === 'dentista') {
-                    header("Location: ../views/dentista/dentista_dashboard.php");
+                    header("Location: ?view=dentista");
                 } else {
-                    header("Location: ../views/dashboard.php");
+                    header("Location: ?view=dashboard");
                 }
                 exit();
             } else {
-                header("Location: ../views/login/login.php?error=1");
+                header("Location: ?view=login&error=1");
                 exit();
             }
         }
@@ -69,16 +69,28 @@ class UsuarioController {
             $this->login();
         }
     }
-}
+    
+    public function logOut() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-// ENRUTADOR
-if (isset($_GET['action']) && $_GET['action'] === 'login') {
-    $controller = new UsuarioController();
-    $controller->login();
-}
+        // borra las variables de sesión
+        $_SESSION = [];
 
-if (isset($_GET['action']) && $_GET['action'] === 'signin') {
-    $controller = new UsuarioController();
-    $controller->signIn();
+        // borra la cookie de la sesión existente
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params['path'], $params['domain'],
+                $params['secure'], $params['httponly']
+            );
+        }
+
+        session_destroy();
+
+        header("Location: ?view=home");
+        exit();
+    }
 }
 ?>
