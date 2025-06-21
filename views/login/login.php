@@ -6,7 +6,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Iniciar Sesión</title>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen px-4">
+    <a href="?view=home" class="mb-6 inline-block text-blue-600 font-semibold hover:underline hover:text-blue-800 transition">Home</a>
     <div class="bg-white p-8 rounded shadow-md w-full max-w-sm">
         <h1 class="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h1>
 
