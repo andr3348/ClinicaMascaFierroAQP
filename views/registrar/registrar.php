@@ -8,7 +8,8 @@
     <title>Registrar nuevo usuario</title>
 </head>
 
-<body class="min-h-screen flex items-center justify-center bg-gray-100">
+<body class="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
+    <a href="?view=home" class="mb-6 inline-block text-blue-600 font-semibold hover:underline hover:text-blue-800 transition">Home</a>
     <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Registrarse</h2>
 

@@ -21,7 +21,7 @@ class LPago implements IPago {
             $pagos[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $pagos;
         } catch (PDOException $e) {
-            die("Error al conseguir los pagos: ".$e->getMessage());
+            throw new Exception("Error al conseguir los pagos: ".$e->getMessage());
         }
     }
 
@@ -45,7 +45,7 @@ class LPago implements IPago {
             }
             return null;
         } catch (PDOException $e) {
-            die("Error al conseguir el pago: ".$e->getMessage());
+            throw new Exception("Error al conseguir el pago: ".$e->getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ class LPago implements IPago {
             $stmt->bindParam(":id",$id_pago,PDO::PARAM_INT);
             $stmt->execute();
         } catch (PDOException $e) {
-            die("Error al intentar eliminar el pago: ".$e->getMessage());
+            throw new Exception("Error al intentar eliminar el pago: ".$e->getMessage());
         }
     }
 
@@ -73,15 +73,23 @@ class LPago implements IPago {
                 ":id_cita" => $pago->getIdCita()
             ]);
         } catch (PDOException $e) {
-            die("Error al guardar un nuevo pago: ".$e->getMessage());
+            throw new Exception("Error al guardar un nuevo pago: ".$e->getMessage());
         }
     }
 
     public function modificarPago(Pago $pago) {
         try {
             $sql = "UPDATE pago SET monto=:monto WHERE id_pago=:id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ":monto" => $pago->getMonto(),
+                ":id" => $pago->getIdPago()
+            ]);
+            $rows = $stmt->rowCount();
+            echo $rows===0 ? "No se modificó el pago" :
+                "Filas afectadas: $rows\n";
         } catch (PDOException $e) {
-            die("Error al modificar el pago: ".$e->getMessage());
+            throw new Exception("Error al modificar el pago: ".$e->getMessage());
         }
     }
 }
