@@ -7,6 +7,7 @@ interface IOdontograma  {
     public function eliminarOdontograma(Odontograma $odontograma);
     public function obtenerOdontogramas();
     public function obtenerOdontogramaPorId($id);
+    public function obtenerOdontogramaPorPaciente($idPaciente);
 }
 
 ?>

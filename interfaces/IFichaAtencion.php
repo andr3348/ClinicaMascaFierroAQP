@@ -7,6 +7,7 @@ interface IFichaAtencion {
     public function eliminarFicha(FichaAtencion $ficha);
     public function obtenerFichas();
     public function obtenerFichaPorId($id);
+    public function obtenerFichasPorPaciente($idPaciente);
 }
 
 ?>

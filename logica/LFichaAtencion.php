@@ -49,6 +49,21 @@ class LFichaAtencion implements IFichaAtencion {
         }
     }
 
+    public function obtenerFichasPorPaciente($idPaciente) {
+        try {
+            $sql = "SELECT f.id_ficha, f.fecha, f.descripcion, f.id_paciente, d.nombre AS nombre_dentista 
+            FROM ficha_atencion f
+            JOIN usuario d ON f.id_dentista = d.id_usuario
+            WHERE f.id_paciente = :id
+            ORDER BY f.fecha DESC";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':id' => $idPaciente]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener registro de fichas de atencion del paciente: ".$e->getMessage());
+        }
+    }
+
     public function eliminarFicha(FichaAtencion $ficha) {
         try {
             $sql = "DELETE FROM ficha_atencion WHERE id_ficha = :id";
