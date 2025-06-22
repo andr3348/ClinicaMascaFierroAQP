@@ -7,6 +7,7 @@ interface IPago {
     public function eliminarPago(Pago $pago);
     public function obtenerPagos();
     public function obtenerPagoPorId($id);
+    public function obtenerPagosPorPaciente($idPaciente);
 }
 
 

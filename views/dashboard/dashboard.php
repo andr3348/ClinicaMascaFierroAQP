@@ -1,9 +1,27 @@
 <?php 
 session_start();
-if (!isset($_SESSION['id_usuario'])) {
+if (!isset($_SESSION['id_usuario']) || !is_numeric($_SESSION['id_usuario'])) {
     header("Location: ../../public/index.php?view=login");
     exit();
 }
+// TOMAR EN CUENTA QUE ESTE PHP SE EJECUTA EN public/index.php
+// y por eso la ruta diferente en require:
+require_once '../controllers/CitaController.php';
+require_once '../controllers/PagoController.php';
+require_once '../controllers/FichaController.php';
+require_once '../controllers/OdontogramaController.php';
+
+$citaController = new CitaController();
+$citas = $citaController->cargarCitasDePaciente($_SESSION['id_usuario']);
+
+$pagoController = new PagoController();
+$pagos = $pagoController->cargarPagosDePaciente($_SESSION['id_usuario']);
+
+$fichaController = new FichaController();
+$fichas = $fichaController->cargarFichasDePaciente($_SESSION['id_usuario']);
+
+$odontogramaController = new OdontogramaController();
+$odontogramas = $odontogramaController->cargarOdontogramasDePaciente($_SESSION['id_usuario']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -30,9 +48,9 @@ if (!isset($_SESSION['id_usuario'])) {
 
         <div>
             <h3 class="text-lg font-medium text-gray-700 mb-4">Mis citas</h3>
-            <div class="overflow-x-auto">
-                <table class="min-w-full border border-gray-300 rounded">
-                    <thead class="bg-blue-500 text-white">
+            <div class="overflow-x-auto max-h-96 overflow-y-auto border rounded">
+                <table class="min-w-full border-collapse">
+                    <thead class="bg-blue-500 text-white sticky top-0">
                         <tr>
                             <th class="py-2 px-4 border-b">Fecha</th>
                             <th class="py-2 px-4 border-b">Estado</th>
@@ -41,14 +59,56 @@ if (!isset($_SESSION['id_usuario'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Aquí puedes llenar dinámicamente con PHP -->
-                        <tr class="text-gray-700 text-center">
-                            <td class="py-2 px-4 border-b">2025-06-20</td>
-                            <td class="py-2 px-4 border-b">Confirmada</td>
-                            <td class="py-2 px-4 border-b">Limpieza dental</td>
-                            <td class="py-2 px-4 border-b">Dr. López</td>
+                        <?php if (empty($citas)): ?>
+                            <tr colspan="5" class="py-3 text-gray-500">
+                                <td>No hay citas registradas.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($citas as $cita): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($cita['fecha']) ?></td>
+                                    <td><?= htmlspecialchars($cita['estado']) ?></td>
+                                    <td><?= htmlspecialchars($cita['descripcion']) ?></td>
+                                    <td><?= htmlspecialchars($cita['nombre_dentista']) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-10">
+            <h3 class="text-lg font-medium text-gray-700 mb-4">
+                Pagos realizados
+            </h3>
+            <div class="overflow-x-auto max-h-96 overflow-y-auto border rounded">
+                <table class="min-w-full border-collapse">
+                    <thead class="bg-green-500 text-white sticky top-0">
+                        <tr>
+                            <th class="py-2 px-4 border-b">ID</th>
+                            <th class="py-2 px-4 border-b">Monto</th>
+                            <th class="py-2 px-4 border-b">Fecha</th>
+                            <th class="py-2 px-4 border-b">Dentista</th>
+                            <th class="py-2 px-4 border-b">Cita (desc.)</th>
                         </tr>
-                        <!-- Más filas... -->
+                    </thead>
+                    <tbody class="text-center text-gray-700">
+                        <?php if (empty($pagos)): ?>
+                            <tr>
+                                <td colspan="5" class="py-3 text-gray-500">No hay citas registradas.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($pagos as $pago): ?>
+                                <tr class="hover:bg-gray-100 transition">
+                                    <td class="py-2 px-4 border-b"><?= htmlspecialchars($pago['id_pago']) ?></td>
+                                    <td class="py-2 px-4 border-b"><?= htmlspecialchars($pago['monto']) ?></td>
+                                    <td class="py-2 px-4 border-b"><?= htmlspecialchars($pago['fecha']) ?></td>
+                                    <td class="py-2 px-4 border-b"><?= htmlspecialchars($pago['nombre_dentista']) ?></td>
+                                    <td class="py-2 px-4 border-b"><?= htmlspecialchars($pago['descripcion']) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>

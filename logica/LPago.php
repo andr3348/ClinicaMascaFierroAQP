@@ -49,6 +49,21 @@ class LPago implements IPago {
         }
     }
 
+    public function obtenerPagosPorPaciente($idPaciente) {
+        try {
+            $sql = "SELECT p.id_pago, p.monto, p.fecha, p.id_paciente, c.descripcion, d.nombre AS nombre_dentista FROM pago p
+            JOIN cita c ON p.id_cita = c.id_cita
+            JOIN usuario d ON c.id_dentista = d.id_usuario
+            WHERE p.id_paciente = :id
+            ORDER BY p.fecha DESC";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':id' => $idPaciente]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener registro de pagos del paciente: ".$e->getMessage());
+        }
+    }
+
     public function eliminarPago(Pago $pago) {
         try {
             $sql = "DELETE FROM pago WHERE id_pago = :id";

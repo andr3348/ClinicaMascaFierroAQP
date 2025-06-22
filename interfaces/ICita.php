@@ -7,6 +7,7 @@ interface ICita {
     public function eliminarCita(Cita $cita);
     public function obtenerCitas();
     public function obtenerCitaPorId($id);
+    public function obtenerCitasPorPaciente($id);
 }
 
 ?>

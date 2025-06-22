@@ -50,6 +50,23 @@ class LCita implements ICita {
         }
     }
 
+    public function obtenerCitasPorPaciente($idPaciente) {
+        try {
+            $sql = "SELECT c.id_cita, c.fecha, c.estado, c.descripcion, 
+            p.nombre AS nombre_paciente, 
+            d.nombre AS nombre_dentista FROM cita c
+            JOIN usuario p ON c.id_paciente = p.id_usuario
+            JOIN usuario d ON c.id_dentista = d.id_usuario
+            WHERE c.id_paciente = :id
+            ORDER BY c.fecha DESC";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':id' => $idPaciente]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener citas del paciente: ".$e->getMessage());
+        }
+    }
+
     public function eliminarCita(Cita $cita) {
         try {
             $sql = "DELETE FROM cita WHERE id_cita = :id";

@@ -13,7 +13,7 @@ class LOdontograma implements IOdontograma {
 
     public function obtenerOdontogramas() {
         try {
-            $sql = "SELECT id_odontograma, imagen, id_paciente, id_dentista
+            $sql = "SELECT id_odontograma, imagen, fecha, id_paciente, id_dentista, id_cita
                     FROM odontograma";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute();
@@ -27,7 +27,7 @@ class LOdontograma implements IOdontograma {
 
     public function obtenerOdontogramaPorId($id) {
         try {
-            $sql = "SELECT id_odontograma, imagen, id_paciente, id_dentista
+            $sql = "SELECT id_odontograma, imagen, fecha, id_paciente, id_dentista, id_cita
                     FROM odontograma WHERE id_odontograma = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(":id",$id, PDO::PARAM_INT);
@@ -38,13 +38,30 @@ class LOdontograma implements IOdontograma {
                 $odontograma = new Odontograma();
                 $odontograma->setIdOdontograma($row['id_odontograma']);
                 $odontograma->setImagen($row['imagen']);
+                $odontograma->setFecha($row['fecha']);
                 $odontograma->setIdPaciente($row['id_paciente']);
                 $odontograma->setIdDentista($row['id_dentista']);
+                $odontograma->setIdCita($row['id_cita']);
                 return $odontograma;
             }
             return null;
         } catch (PDOException $e) {
             throw new Exception("Error al conseguir el odontograma: ".$e->getMessage());
+        }
+    }
+
+    public function obtenerOdontogramaPorPaciente($idPaciente) {
+        try {
+            $sql = "SELECT o.id_odontograma, o.imagen, o.fecha, o.id_paciente, d.nombre AS nombre_dentista, o.id_cita, c.descripcion
+            FROM odontograma o
+            JOIN usuario d ON o.id_dentista = d.id_usuario
+            JOIN cita c ON o.id_cita = c.id_cita
+            WHERE o.id_paciente = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':id' => $idPaciente]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener registro de odontogramas del paciente: ".$e->getMessage());
         }
     }
 
@@ -62,14 +79,15 @@ class LOdontograma implements IOdontograma {
 
     public function guardarOdontograma(Odontograma $odontograma) {
         try {
-            $sql = "INSERT INTO odontograma (imagen,id_paciente,id_dentista)
-                    VALUES (:imagen, :id_paciente, :id_dentista)";
+            $sql = "INSERT INTO odontograma (imagen,id_paciente,id_dentista,id_cita)
+                    VALUES (:imagen, :id_paciente, :id_dentista,:id_cita)";
             $stmt = $this->pdo->prepare($sql);
 
             $stmt->execute([
                 ":imagen" => $odontograma->getImagen(),
                 ":id_paciente" => $odontograma->getIdPaciente(),
-                ":id_dentista" => $odontograma->getIdDentista()
+                ":id_dentista" => $odontograma->getIdDentista(),
+                ":id_cita" => $odontograma->getIdCita()
             ]);
         } catch (PDOException $e) {
             throw new Exception("Error al guardar un nuevo odontograma: ".$e->getMessage());
