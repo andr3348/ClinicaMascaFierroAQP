@@ -25,6 +25,27 @@ class LCita implements ICita {
         }
     }
 
+    public function obtenerCitasConfirmadas() {
+        try {
+            $sql = "SELECT c.id_cita, c.fecha, c.descripcion, 
+            p.nombre AS nombre_paciente,
+            o.id_odontograma, c.id_paciente, c.id_dentista,
+            o.imagen
+                    FROM cita c
+                    JOIN usuario p ON c.id_paciente = p.id_usuario
+                    LEFT JOIN odontograma o ON c.id_cita=o.id_cita
+                    WHERE c.estado = 'confirmada'
+                    ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+
+            $citas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $citas;
+        } catch (PDOException $e) {
+            throw new Exception("Error al conseguir las citas confirmadas: ".$e->getMessage());
+        }
+    }
+
     public function obtenerCitaPorId($id) {
         try {
             $sql = "SELECT id_cita, fecha, estado, descripcion, id_paciente, id_dentista

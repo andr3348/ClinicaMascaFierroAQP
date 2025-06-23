@@ -7,6 +7,17 @@ class CitaController {
         $lcita = new LCita();
         return $lcita->obtenerCitasPorPaciente($idPaciente);
     }
+
+    // DENTISTA ---------------------
+    public function cargarCitasConfirmadas() {
+        $lcita = new LCita();
+        return $lcita->obtenerCitasConfirmadas();
+    }
+
+    public function cargarCitaPorId() {
+        $lcita = new LCita();
+        return $lcita->obtenerCitaPorId($_GET['id_cita']);
+    }
 }
 
 ?>

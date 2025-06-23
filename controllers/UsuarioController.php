@@ -92,5 +92,41 @@ class UsuarioController {
         header("Location: ?view=home");
         exit();
     }
+
+
+    // ADMIN ----------------------------
+    public function cargarUsuarios() {
+        $lusuario = new LUsuario();
+        return $lusuario->obtenerUsuarios();
+    }
+
+    public function cargarUsuario($idUsuario) {
+        $lusuario = new LUsuario();
+        return $lusuario->obtenerUsuarioPorId($idUsuario);
+    }
+
+    public function eliminarUsuario($idUsuario) {
+        $lusuario = new LUsuario();
+        $lusuario->eliminarUsuario($idUsuario);
+        header('Location: ?view=admin');
+    }
+
+    public function actualizarUsuario(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $usuario = new Usuario();
+            $usuario->setIdusuario($_POST['id_usuario']);
+            $usuario->setNombre($_POST['nombre']);
+            $usuario->setCorreo($_POST['correo']);
+            $usuario->setPassword($_POST['passw']);
+            $usuario->setDni($_POST['dni']);
+            $usuario->setTipousuario($_POST['tipo_usuario']);
+
+            $lusuario = new LUsuario();
+            $lusuario->modificarUsuario($usuario);
+
+            header('Location: ?view=admin');
+            exit();
+        }
+    }
 }
 ?>
