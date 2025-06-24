@@ -39,6 +39,12 @@ class CitaController {
             $id_paciente = $_POST['id_paciente'];
             $id_dentista = $_POST['id_dentista'];
 
+            if (empty($id_paciente) || empty($id_dentista)) {
+                $_SESSION['error'] = "Añada una descripción y seleccione un dentista.";
+                header("Location: ?paciente=nuevaCita");
+                exit();
+            }
+
             $lcita = new LCita();
             $lcita->guardarCita($estado, $descripcion, $id_paciente, $id_dentista);
 

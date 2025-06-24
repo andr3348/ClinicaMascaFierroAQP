@@ -21,6 +21,10 @@ $dentistas = $usuarioController->cargarDentistas();
     <title>Nueva cita</title>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+    <?php if (isset($_SESSION['error'])): ?>
+        <p class="text-red-500"><?=$_SESSION['error']?></p>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
     <a href="?view=dashboard" class="absolute top-6 left-6 text-blue-600 hover:text-blue-800 font-medium hover:underline transition duration-200">Atrás</a>
     <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-md space-y-6">
         <h3 class="text-xl font-semibold text-center text-gray-800">Registrar nueva cita</h3>
