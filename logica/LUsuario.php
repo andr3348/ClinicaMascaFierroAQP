@@ -149,6 +149,15 @@ class LUsuario implements IUsuario {
             die("Error en el login: ".$e->getMessage());
         }
     }
+
+    public function correoExiste($correo) {
+        $sql = "SELECT COUNT(*) FROM usuario WHERE correo = :correo";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([":correo" => $correo]);
+        $count = $stmt->fetchColumn();
+
+        return $count > 0;
+    }
     
 }
 ?>

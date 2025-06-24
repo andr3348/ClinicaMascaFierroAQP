@@ -9,7 +9,6 @@ class UsuarioController {
             $password = $_POST['password'];
 
             if (empty($correo) || empty($password)) {
-                echo "Complete todos los campos.";
                 header("Location: ?view=login");
                 exit();
             }
@@ -57,12 +56,18 @@ class UsuarioController {
             $campos = array($nombre, $correo, $passw, $dni);
             foreach ($campos as $campo) {
                 if (empty($campo)) {
-                    echo "Completa todos los campos.";
                     header("Location: ?view=registrar");
                     exit();
                     return;
                 }
             }
+
+            $lusuario = new LUsuario();
+            if ($lusuario->correoExiste($correo)) {
+                header("Location: ?user=registrar");
+                exit();
+            }
+
 
             $usuario = new Usuario();
             $usuario->setNombre($nombre);
