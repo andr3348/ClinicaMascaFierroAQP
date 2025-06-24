@@ -24,6 +24,46 @@ class LCita implements ICita {
             throw new Exception("Error al conseguir las citas: ".$e->getMessage());
         }
     }
+    public function obtenerCitasConfirmadas() {
+        try {
+            $sql = "SELECT c.id_cita, c.fecha, c.descripcion, 
+            p.nombre AS nombre_paciente,
+            o.id_odontograma, c.id_paciente, c.id_dentista,
+            o.imagen
+                    FROM cita c
+                    JOIN usuario p ON c.id_paciente = p.id_usuario
+                    LEFT JOIN odontograma o ON c.id_cita=o.id_cita
+                    WHERE c.estado = 'confirmada'
+                    ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+
+            $citas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $citas;
+        } catch (PDOException $e) {
+            throw new Exception("Error al conseguir las citas confirmadas: ".$e->getMessage());
+        }
+    }
+
+    public function obtenerCitasPendientes() {
+        try {
+            $sql = "SELECT c.id_cita, c.fecha, c.descripcion, c.estado,
+            p.nombre AS nombre_paciente, d.nombre AS nombre_dentista,
+            c.id_paciente, c.id_dentista
+                    FROM cita c
+                    JOIN usuario p ON c.id_paciente = p.id_usuario
+                    JOIN usuario d ON c.id_dentista = d.id_usuario
+                    WHERE c.estado = 'pendiente'
+                    ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+
+            $citas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $citas;
+        } catch (PDOException $e) {
+            throw new Exception("Error al conseguir las citas pendientes: ".$e->getMessage());
+        }
+    }
 
     public function obtenerCitaPorId($id) {
         try {
@@ -78,18 +118,17 @@ class LCita implements ICita {
             throw new Exception("Error al intentar eliminar la cita: ".$e->getMessage());
         }
     }
-
-    public function guardarCita(Cita $cita) {
+    public function guardarCita($estado, $descripcion, $idPaciente, $idDentista) {
         try {
             $sql = "INSERT INTO cita (estado, descripcion, id_paciente, id_dentista)
                     VALUES (:estado, :descripcion, :id_paciente, :id_dentista)";
             $stmt = $this->pdo->prepare($sql);
 
             $stmt->execute([
-                ":estado" => $cita->getEstado(),
-                ":descripcion" => $cita->getDescripcion(),
-                ":id_paciente" => $cita->getIdPaciente(),
-                ":id_dentista" => $cita->getIdDentista()
+                ":estado" => $estado,
+                ":descripcion" => $descripcion,
+                ":id_paciente" => $idPaciente,
+                ":id_dentista" => $idDentista
             ]);
         } catch (PDOException $e) {
             throw new Exception("Error al guardar una nueva cita: ".$e->getMessage());
@@ -110,6 +149,22 @@ class LCita implements ICita {
                 "Filas afectadas: $rows\n";
         } catch (PDOException $e) {
             throw new Exception("Error al modificar la cita: ".$e->getMessage());
+        }
+    }
+
+    public function confirmarEstadoCita($estado,$id_cita) {
+        try {
+            $sql = "UPDATE cita SET estado=:estado WHERE id_cita=:id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ":estado" => $estado,
+                ":id" => $id_cita
+            ]);
+            $rows = $stmt->rowCount();
+            echo $rows===0 ? "No se modificó la cita" :
+                "Filas afectadas: $rows\n";
+        } catch (PDOException $e) {
+            throw new Exception("Error al modificar el estado de la cita: ".$e->getMessage());
         }
     }
 }

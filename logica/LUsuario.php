@@ -29,7 +29,7 @@ class LUsuario implements IUsuario {
     public function obtenerUsuarioPorId($id) {
         try {
             $sql = "SELECT id_usuario, nombre, correo, passw, dni, tipo_usuario
-                    FROM usuarios WHERE id_usuario = :id";
+                    FROM usuario WHERE id_usuario = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
@@ -51,12 +51,26 @@ class LUsuario implements IUsuario {
         }
     }
 
-    public function eliminarUsuario(Usuario $usuario) {
+    public function obtenerDentistas() {
+        try {
+            $sql = "SELECT id_usuario, nombre, correo, passw, dni, tipo_usuario
+                    FROM usuario WHERE tipo_usuario = 'dentista'";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            
+            $dentistas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $dentistas;
+        } catch (PDOException $e) {
+            die("Error al obtener los dentistas: ".$e->getMessage());
+        }
+    }
+
+    public function eliminarUsuario($id) {
         try {
             $sql = "DELETE FROM usuario WHERE id_usuario = :id";
             $stmt = $this->pdo->prepare($sql);
-            $id_usuario = $usuario->getIdusuario();
-            $stmt->bindParam(':id', $id_usuario, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
         } catch (PDOException $e) {
             die("Error al eliminar el usuario: ".$e->getMessage());

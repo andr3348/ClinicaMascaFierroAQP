@@ -75,17 +75,16 @@ class LPago implements IPago {
             throw new Exception("Error al intentar eliminar el pago: ".$e->getMessage());
         }
     }
-
-    public function guardarPago(Pago $pago) {
+    public function guardarPago($monto,$idPaciente,$idCita) {
         try {
             $sql = "INSERT INTO pago (monto,id_paciente,id_cita)
                     VALUES (:monto, :id_paciente, :id_cita)";
             $stmt = $this->pdo->prepare($sql);
 
             $stmt->execute([
-                ":monto" => $pago->getMonto(),
-                ":id_paciente" => $pago->getIdPaciente(),
-                ":id_cita" => $pago->getIdCita()
+                ":monto" => $monto,
+                ":id_paciente" => $idPaciente,
+                ":id_cita" => $idCita
             ]);
         } catch (PDOException $e) {
             throw new Exception("Error al guardar un nuevo pago: ".$e->getMessage());
