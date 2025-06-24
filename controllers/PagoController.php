@@ -14,6 +14,12 @@ class PagoController {
             $id_paciente = $_POST['id_paciente'];
             $id_cita = $_POST['id_cita'];
 
+            if (empty($monto) ||  empty($id_cita)) {
+                $_SESSION['error'] = "Seleccione una cita";
+                header('Location: ?paciente=nuevoPago');
+                exit();
+            }
+
             $lpago = new LPago();
             $lpago->guardarPago($monto,$id_paciente,$id_cita);
 

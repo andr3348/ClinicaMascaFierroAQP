@@ -14,6 +14,11 @@ class OdontogramaController {
             $id_dentista = $_POST['id_dentista'];
             $id_cita = $_POST['id_cita'];
 
+            if (empty($imagen)) {
+                header("location: ?dentista=subirOdontograma&id_cita=$id_cita&id_paciente=$id_paciente&id_dentista=$id_dentista");
+                exit();
+            }
+
             if ($imagen['error'] === UPLOAD_ERR_OK) {
                 $ext = pathinfo($imagen['name'], PATHINFO_EXTENSION);
                 $filename = uniqid('odonto_') . '.' . $ext;

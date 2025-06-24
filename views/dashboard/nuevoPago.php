@@ -52,6 +52,9 @@ $citas = $citaController->cargarCitasConfirmadasPaciente();
                 <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-md shadow transition duration-200">
                     Registrar
                 </button>
+                <?php if (isset($_SESSION['error'])): ?>
+                    <p class="text-red-500">Ingrese un monto y una cita.</p>
+                <?php endif; ?>
             </div>
         </form>
     </div>

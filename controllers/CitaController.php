@@ -39,7 +39,7 @@ class CitaController {
             $id_paciente = $_POST['id_paciente'];
             $id_dentista = $_POST['id_dentista'];
 
-            if (empty($id_paciente) || empty($id_dentista)) {
+            if (empty($id_paciente) || empty($id_dentista) || empty($descripcion)) {
                 $_SESSION['error'] = "Añada una descripción y seleccione un dentista.";
                 header("Location: ?paciente=nuevaCita");
                 exit();

@@ -8,6 +8,12 @@ class UsuarioController {
             $correo = $_POST['correo'];
             $password = $_POST['password'];
 
+            if (empty($correo) || empty($password)) {
+                echo "Complete todos los campos.";
+                header("Location: ?view=login");
+                exit();
+            }
+
             $logic = new LUsuario();
             $usuario = $logic->verificarCredenciales($correo, $password);
 
@@ -52,6 +58,8 @@ class UsuarioController {
             foreach ($campos as $campo) {
                 if (empty($campo)) {
                     echo "Completa todos los campos.";
+                    header("Location: ?view=registrar");
+                    exit();
                     return;
                 }
             }
