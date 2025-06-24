@@ -93,7 +93,6 @@ class UsuarioController {
         exit();
     }
 
-
     // ADMIN ----------------------------
     public function cargarUsuarios() {
         $lusuario = new LUsuario();

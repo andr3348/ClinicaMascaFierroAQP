@@ -24,7 +24,6 @@ class LCita implements ICita {
             throw new Exception("Error al conseguir las citas: ".$e->getMessage());
         }
     }
-
     public function obtenerCitasConfirmadas() {
         try {
             $sql = "SELECT c.id_cita, c.fecha, c.descripcion, 
@@ -119,7 +118,6 @@ class LCita implements ICita {
             throw new Exception("Error al intentar eliminar la cita: ".$e->getMessage());
         }
     }
-
     public function guardarCita($estado, $descripcion, $idPaciente, $idDentista) {
         try {
             $sql = "INSERT INTO cita (estado, descripcion, id_paciente, id_dentista)

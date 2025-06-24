@@ -75,7 +75,6 @@ class LPago implements IPago {
             throw new Exception("Error al intentar eliminar el pago: ".$e->getMessage());
         }
     }
-
     public function guardarPago($monto,$idPaciente,$idCita) {
         try {
             $sql = "INSERT INTO pago (monto,id_paciente,id_cita)
