@@ -8,7 +8,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>MascaFierro | Home</title>
 </head>
-<body class="bg-gray-100 min-h-screen font-sans">
+<body class="bg-gray-100 min-h-screen font-sans relative overflow-hidden">
+
+    <img src="uploads/clinica.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30 -z-10 pointer-events-none">
+
     <nav class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
         <p class="text-xl font-bold text-blue-600">MascaFierro</p>
         <div class="space-x-4">
