@@ -9,7 +9,7 @@ $id_paciente = $_SESSION['id_usuario'];
 
 require_once '../controllers/CitaController.php';
 $citaController = new CitaController();
-$citas = $citaController->cargarCitasConfirmadas();
+$citas = $citaController->cargarCitasConfirmadasPaciente();
 
 ?>
 <!DOCTYPE html>

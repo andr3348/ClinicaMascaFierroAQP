@@ -8,10 +8,17 @@ class CitaController {
         return $lcita->obtenerCitasPorPaciente($idPaciente);
     }
 
+    public function cargarCitasConfirmadasPaciente() {
+        $idPaciente = $_SESSION['id_usuario'];
+        $lcita = new LCita();
+        return $lcita->obtenerCitasConfirmadasPaciente( $idPaciente);
+    }
+
     // DENTISTA ---------------------
     public function cargarCitasConfirmadas() {
+        $idDentista = $_SESSION['id_usuario'];
         $lcita = new LCita();
-        return $lcita->obtenerCitasConfirmadas();
+        return $lcita->obtenerCitasConfirmadas($idDentista);
     }
 
     // SECRETARIA -----------------------------

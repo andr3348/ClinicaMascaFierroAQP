@@ -24,7 +24,7 @@ class LCita implements ICita {
             throw new Exception("Error al conseguir las citas: ".$e->getMessage());
         }
     }
-    public function obtenerCitasConfirmadas() {
+    public function obtenerCitasConfirmadas($idDentista) {
         try {
             $sql = "SELECT c.id_cita, c.fecha, c.descripcion, 
             p.nombre AS nombre_paciente,
@@ -34,9 +34,34 @@ class LCita implements ICita {
                     JOIN usuario p ON c.id_paciente = p.id_usuario
                     LEFT JOIN odontograma o ON c.id_cita=o.id_cita
                     WHERE c.estado = 'confirmada'
-                    ";
+                    AND c.id_dentista = :id_dentista";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
+            $stmt->execute([
+                ":id_dentista" => $idDentista
+            ]);
+
+            $citas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $citas;
+        } catch (PDOException $e) {
+            throw new Exception("Error al conseguir las citas confirmadas: ".$e->getMessage());
+        }
+    }
+
+    public function obtenerCitasConfirmadasPaciente($idPaciente) {
+        try {
+            $sql = "SELECT c.id_cita, c.fecha, c.descripcion, 
+            p.nombre AS nombre_paciente,
+            o.id_odontograma, c.id_paciente, c.id_dentista,
+            o.imagen
+                    FROM cita c
+                    JOIN usuario p ON c.id_paciente = p.id_usuario
+                    LEFT JOIN odontograma o ON c.id_cita=o.id_cita
+                    WHERE c.estado = 'confirmada'
+                    AND c.id_paciente = :id_paciente";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ":id_paciente" => $idPaciente
+            ]);
 
             $citas = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $citas;
