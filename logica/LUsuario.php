@@ -51,6 +51,21 @@ class LUsuario implements IUsuario {
         }
     }
 
+    public function obtenerDentistas() {
+        try {
+            $sql = "SELECT id_usuario, nombre, correo, passw, dni, tipo_usuario
+                    FROM usuario WHERE tipo_usuario = 'dentista'";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            
+            $dentistas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $dentistas;
+        } catch (PDOException $e) {
+            die("Error al obtener los dentistas: ".$e->getMessage());
+        }
+    }
+
     public function eliminarUsuario($id) {
         try {
             $sql = "DELETE FROM usuario WHERE id_usuario = :id";

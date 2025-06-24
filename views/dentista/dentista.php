@@ -68,7 +68,7 @@ $citas = $citaController->cargarCitasConfirmadas();
                                     <?php if (is_null($cita['imagen'])): ?>
                                     <a href="?dentista=subirOdontograma&id_cita=<?=htmlspecialchars($cita['id_cita'])?>&id_paciente=<?=htmlspecialchars($cita['id_paciente'])?>&id_dentista=<?=htmlspecialchars($cita['id_dentista'])?>" class="text-blue-600 hover:underline">Agregar Odontograma</a>
                                     <?php else: ?>
-                                        <img src="../uploads/odontogramas/<?=htmlspecialchars($cita['imagen'])?>" alt="No disponible." class="w-16 h-16 object-cover rounded shadow">
+                                        <img src="/uploads/odontogramas/<?=htmlspecialchars($cita['imagen'])?>" class="w-16 h-16 object-cover rounded shadow">
                                     <?php endif; ?>
                                 </td>
                             </tr>

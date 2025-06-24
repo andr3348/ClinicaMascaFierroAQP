@@ -14,7 +14,7 @@
         <div class="space-x-4">
             <?php if (!isset($_SESSION['id_usuario'])): ?>
                 <a href="?view=login" class="text-blue-500 hover:text-blue-700 font-medium">Iniciar Sesión</a>
-                <a href="?view=registrar" class="text-green-500 hover:text-green-700 font-medium">Registrarse</a>
+                <a href="?user=registrar" class="text-green-500 hover:text-green-700 font-medium">Registrarse</a>
             <?php else: ?>
                 <span class="text-green-700">Bienvenido, <?= htmlspecialchars($_SESSION['nombre']) ?></span>
                 <?php if ($_SESSION['tipo'] == 'admin'): ?>

@@ -52,6 +52,7 @@ $odontogramas = $odontogramaController->cargarOdontogramasDePaciente($_SESSION['
         <!-- TABLA CITAS -->
         <div>
             <h3 class="text-lg font-medium text-gray-700 mb-4">Mis citas</h3>
+            <a href="?paciente=nuevaCita" class="inline-block mb-3 text-sm text-green-600 font-medium hover:text-green-800 hover:underline transition duration-200">Nueva Cita</a>
             <div class="overflow-x-auto max-h-96 overflow-y-auto border rounded">
                 <table class="min-w-full border-collapse">
                     <thead class="bg-blue-500 text-white sticky top-0">
@@ -86,6 +87,7 @@ $odontogramas = $odontogramaController->cargarOdontogramasDePaciente($_SESSION['
             <h3 class="text-lg font-medium text-gray-700 mb-4">
                 Pagos realizados
             </h3>
+            <a href="?paciente=nuevoPago" class="inline-block mb-3 text-sm text-blue-600 font-medium hover:text-blue-800 hover:underline transition duration-200">Nuevo Pago</a>
             <div class="overflow-x-auto max-h-96 overflow-y-auto border rounded">
                 <table class="min-w-full border-collapse">
                     <thead class="bg-green-500 text-white sticky top-0">
@@ -100,7 +102,7 @@ $odontogramas = $odontogramaController->cargarOdontogramasDePaciente($_SESSION['
                     <tbody class="text-center text-gray-700">
                         <?php if (empty($pagos)): ?>
                             <tr>
-                                <td colspan="5" class="py-3 text-gray-500">No hay citas registradas.</td>
+                                <td colspan="5" class="py-3 text-gray-500">No hay pagos registrados.</td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($pagos as $pago): ?>

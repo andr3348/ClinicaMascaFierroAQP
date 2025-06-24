@@ -9,6 +9,9 @@ if ($_SESSION['tipo'] != 'dentista') {
     $logout = new UsuarioController();
     $logout->logOut();
 }
+
+
+
 require_once '../controllers/CitaController.php';
 $citaController = new CitaController();
 $cita = $citaController->cargarCitaPorId();
@@ -24,6 +27,7 @@ $cita = $citaController->cargarCitaPorId();
     <title>Subir Nuevo Odontograma</title>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+    <a href="?view=dentista" class="absolute top-6 left-6 text-blue-600 hover:text-blue-800 font-medium hover:underline transition duration-200">Atrás</a>
     <div class="bg-white w-full max-w-md shadow-lg rounded-lg p-6 space-y-6">
         <h2 class="text-xl font-bold text-gray-800 text-center">Subir un nuevo odontograma</h2>
         <form action="?action=subirOdontograma" method="POST" enctype="multipart/form-data" class="space-y-4">

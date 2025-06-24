@@ -49,6 +49,51 @@ if (isset($_GET['action']) && $_GET['action'] === 'subirOdontograma'
     require_once '../controllers/OdontogramaController.php';
     $odontogramaController = new OdontogramaController();
     $odontogramaController->subirOdontograma();
+    return;
+}
+
+if (isset($_GET['paciente']) && $_GET['paciente'] === 'nuevaCita') {
+    require_once '../views/dashboard/nuevaCita.php';
+    return;
+}
+if (isset($_GET['action']) && $_GET['action'] === 'crearCita'
+    && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once '../controllers/CitaController.php';
+    $citaController = new CitaController();
+    $citaController->crearCita();
+    return;
+}
+
+if (isset($_GET['paciente']) && $_GET['paciente'] === 'nuevoPago') {
+    require_once '../views/dashboard/nuevoPago.php';
+    return;
+}
+if (isset($_GET['action']) && $_GET['action'] === 'registrarPago'
+    && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once '../controllers/PagoController.php';
+    $pagoController = new PagoController();
+    $pagoController->crearPago();
+    return;
+}
+
+if (isset($_GET['action']) && $_GET['action'] === 'confirmarCita'
+    && isset($_GET['id']) && is_numeric($_GET['id'])) {
+    require_once '../controllers/CitaController.php';
+    $citaController = new CitaController();
+    $citaController->confirmarCita();
+    return;
+}
+if (isset($_GET['action']) && $_GET['action'] === 'eliminarCita'
+    && isset($_GET['id']) && is_numeric($_GET['id'])) {
+    require_once '../controllers/CitaController.php';
+    $citaController = new CitaController();
+    $citaController->eliminarCita();
+    return;
+}
+
+if (isset($_GET['user']) && $_GET['user'] === 'registrar') {
+    require_once '../views/registrar/registrar.php';
+    return;
 }
 
 

@@ -13,7 +13,7 @@
     <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Registrarse</h2>
 
-        <form action="../../controllers/UsuarioController.php?action=signin" method="POST" class="space-y-4">
+        <form action="?action=signin" method="POST" class="space-y-4">
             <div>
                 <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre(s):</label>
                 <input type="text" name="nombre" id="nombre" required

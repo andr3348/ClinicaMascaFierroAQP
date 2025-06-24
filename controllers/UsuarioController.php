@@ -128,5 +128,12 @@ class UsuarioController {
             exit();
         }
     }
+
+
+    // PACIENTE -------------------------------------
+    public function cargarDentistas() {
+        $lusuario = new LUsuario();
+        return $lusuario->obtenerDentistas();
+    }
 }
 ?>

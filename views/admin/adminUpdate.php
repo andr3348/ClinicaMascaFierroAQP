@@ -24,6 +24,7 @@ $usuario = $usuarioController->cargarUsuario(intval($_GET['id']));
     <title>Admin | Update User</title>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+    <a href="?view=admin" class="absolute top-6 left-6 text-blue-600 hover:text-blue-800 hover:underline font-medium transition duration-200">Atrás</a>
 
         <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Modificar Usuario</h2>

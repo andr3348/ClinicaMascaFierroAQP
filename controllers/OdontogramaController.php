@@ -17,7 +17,7 @@ class OdontogramaController {
             if ($imagen['error'] === UPLOAD_ERR_OK) {
                 $ext = pathinfo($imagen['name'], PATHINFO_EXTENSION);
                 $filename = uniqid('odonto_') . '.' . $ext;
-                $ruta = "../uploads/odontogramas/" . $filename;
+                $ruta = "/uploads/odontogramas/" . $filename;
 
                 if (move_uploaded_file($imagen['tmp_name'], $ruta)) {
 
